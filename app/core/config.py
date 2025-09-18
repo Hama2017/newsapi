@@ -1,4 +1,4 @@
 API_TITLE = "News API"
 API_VERSION = "1.0.0"
-API_V1_PREFIX = "/api/v1"
+API_PREFIX = "/api"
 

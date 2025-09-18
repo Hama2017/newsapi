@@ -4,7 +4,9 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from sqlmodel import SQLModel
-from app.models.news import News 
+
+from app.routes.news.model import News
+from app.routes.category.model import Category
 
 from alembic import context
 
@@ -19,8 +21,6 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
 target_metadata = SQLModel.metadata
 
 # other values from the config, defined by the needs of env.py,
