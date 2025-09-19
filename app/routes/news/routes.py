@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel
 from sqlmodel import Session
 from app.db.base import get_session
 from .service import NewsService
@@ -7,14 +8,17 @@ from typing import List
 
 router = APIRouter()
 
-@router.post("/", response_model=NewsRead)
+class NewsId(BaseModel):
+    id: int
+    
+@router.post("/", response_model=NewsId)
 def create_news(
     news_data: NewsCreate,
     db: Session = Depends(get_session)
 ):
     service = NewsService(db)
     result = service.create_news(news_data)
-    return result
+    return NewsId(id=result.id)
 
 @router.get("/", response_model=List[NewsRead])
 def get_all_news(db: Session = Depends(get_session)):

@@ -9,7 +9,11 @@ class NewsRepository:
         self.db = db
 
     def create(self, news_data: NewsCreate) -> News:
-        news = News(**news_data.model_dump())
+        news = News(
+            title=news_data.title,
+            subtitle=news_data.subtitle,
+            category_id=news_data.category.id
+        )
         self.db.add(news)
         self.db.commit()
         self.db.refresh(news)
@@ -36,9 +40,10 @@ class NewsRepository:
     def update(self, news_id: int, news_data: NewsUpdate) -> Optional[News]:
         news = self.db.exec(select(News).where(News.id == news_id)).first()
         if news:
-            update_data = news_data.model_dump(exclude_unset=True)
-            for field, value in update_data.items():
-                setattr(news, field, value)
+            news.title = news_data.title
+            news.subtitle = news_data.subtitle
+            news.category_id = news_data.category.id
+            
             self.db.add(news)
             self.db.commit()
             self.db.refresh(news)

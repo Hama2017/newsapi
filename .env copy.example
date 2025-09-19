@@ -1,1 +1,1 @@
-DATABASE_URL = postgresql://postgres:postgres@localhost:5432/apinews
+DATABASE_URL = postgresql://postgres:Admin3553**@localhost:5432/apinews

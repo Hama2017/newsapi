@@ -13,7 +13,7 @@ class NewsService:
 
     def create_news(self, news_data: NewsCreate) -> NewsRead:
         try:
-            if not self.category_repository.exists_by_id(news_data.category_id):
+            if not self.category_repository.exists_by_id(news_data.category.id):
                 raise HTTPException(status_code=404, detail=ErrorCode.CATEGORY_NOT_FOUND.name)
 
             news = self.news_repository.create(news_data)
@@ -48,7 +48,7 @@ class NewsService:
 
     def update_news(self, news_id: int, news_data: NewsUpdate) -> NewsRead:
         try:
-            if news_data.category_id and not self.category_repository.exists_by_id(news_data.category_id):
+            if news_data.category.id and not self.category_repository.exists_by_id(news_data.category.id):
                 raise HTTPException(status_code=404, detail=ErrorCode.CATEGORY_NOT_FOUND.name)
 
             updated_news = self.news_repository.update(news_id, news_data)
