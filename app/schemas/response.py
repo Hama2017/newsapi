@@ -1,12 +1,9 @@
 from pydantic import BaseModel
 from typing import Generic, TypeVar
-from app.enums.error_codes import ErrorCode
+from enum import Enum
 
 T = TypeVar('T')
 
-class ErrorResponse(BaseModel):
-    detail: ErrorCode
-
 class ApiResponse(BaseModel, Generic[T]):
-    ok: bool
-    result: T
+    data: T
+
